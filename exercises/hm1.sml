@@ -10,15 +10,15 @@ fun is_older (date1 : int * int * int, date2 : int * int * int) =
     else if (#3 date1) > (#3 date2) then false
     else false
 	
-	
-
-
-
-
 (* 2. Write a function number_in_month that takes a list of dates and a month (i.e., an int) and returns how many dates in the list are in the given month. *)
+(* val number_in_month = fn : (int * int * int) list * int -> int *)
 
-
-
+fun number_in_month (ds : (int * int * int) list, month : int) =
+    if null ds then 0
+    else if ((#2 (hd ds)) + (#2 (hd(tl ds)))) div 2 = month then 2
+    else if #2 (hd ds) = month then 1
+    else if #2 (hd(tl ds)) = month then 1
+    else 0
 
 
 (* 3. Write a function number_in_months that takes a list of dates and a list of months (i.e., and int list) and returns the number of dates in the list of dates that are in any of the months in the list of months. Assume the list of months has no number repeated. Hint: Use your answer to the previous problem. *)
