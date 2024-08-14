@@ -28,11 +28,10 @@ fun number_in_months (ds : (int * int * int) list, ms : int list) =
 (* 4. Write a function dates_in_month that takes a list of dates and a month (i.e., an int) and returns a list holding the dates from the argument list of dates that are in the month. The returned list should contain dates in the order they were originally given. *)
 (* val dates_in_month = fn : (int * int * int) list * int -> (int * int * int) list *)
 
-						 
-
-
-
-
+fun dates_in_month (ds : (int * int * int) list, month : int) =
+    if null ds then []
+    else if #2 (hd ds) = month then (hd ds) :: dates_in_month(tl ds, month)
+    else dates_in_month(tl ds, month)
 
 (* 5. Write a function dates_in_months that takes a list of dates and a list of months (i.e., an int list) and returns a list holding the dates from the argument list of dates that are in any of the months in the list of months. Assume the list of months has no number repeated. Hint: Use your answer to the previous problem and SML’s list-append operator (@). *)
 
