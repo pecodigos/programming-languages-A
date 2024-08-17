@@ -12,10 +12,25 @@ fun alternate (ns: int list) =
 	
 (* 2. Write a function `min_max : int list -> int * int` that takes a non-empty list of numbers, and returns a pair `(min, max)` of the minimum and maximum of the numbers in the list. *)
 
+fun min_max (ns: int list) =
+    let
+	fun tuple (n1: int, n2: int, ns: int list) =
+	    if null (tl ns) then (n1, n2)
+	    else if n1 < hd(tl ns) then tuple(n1, hd(tl ns), tl ns)
+	    else tuple(hd(tl ns), n1, tl ns)
+    in
+	tuple(hd ns, hd ns, ns)
+    end
+	
+
 (* 3. Write a function `cumsum : int list -> int list` that takes a list of numbers and returns a list of the partial sums of those numbers. For example: `cumsum [1,4,20] = [1,5,25]`. *)
 
+
+	
 (* 4. Write a function `greeting : string option -> string` that given a string option `SOME name` returns the string "Hello there, ...!" where the dots would be replaced by name. Note that the name is given as an option, so if it is `NONE` then replace the dots with "you". *)
 
+
+	
 (* 5. Write a function `repeat : int list * int list -> int list` that given a list of integers and another list of nonnegative integers, repeats the integers in the first list according to the numbers indicated by the second list. For example: `repeat ([1,2,3], [4,0,3]) = [1,1,1,1,3,3,3]`. *)
 
 (* 6. Write a function `addOpt : int option * int option -> int option` that given two "optional" integers, adds them if they are both present (returning `SOME` of their sum), or returns `NONE` if at least one of the two arguments is `NONE`. *)
