@@ -36,7 +36,9 @@ fun cumsum (ns: int list) =
 	
 (* 4. Write a function `greeting : string option -> string` that given a string option `SOME name` returns the string "Hello there, ...!" where the dots would be replaced by name. Note that the name is given as an option, so if it is `NONE` then replace the dots with "you". *)
 
-
+fun greeting (name: string option) =
+    if isSome name then "Hello there, " ^ valOf name ^ "!"
+    else "Hello there, you!"
 	
 (* 5. Write a function `repeat : int list * int list -> int list` that given a list of integers and another list of nonnegative integers, repeats the integers in the first list according to the numbers indicated by the second list. For example: `repeat ([1,2,3], [4,0,3]) = [1,1,1,1,3,3,3]`. *)
 
