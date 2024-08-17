@@ -25,7 +25,14 @@ fun min_max (ns: int list) =
 
 (* 3. Write a function `cumsum : int list -> int list` that takes a list of numbers and returns a list of the partial sums of those numbers. For example: `cumsum [1,4,20] = [1,5,25]`. *)
 
-
+fun cumsum (ns: int list) =
+    let
+	fun summation (n: int, ns: int list) =
+	    if null (tl ns) then [n]
+	    else n :: summation(n + hd(tl ns), tl ns)
+    in
+	summation(hd ns, ns)
+    end
 	
 (* 4. Write a function `greeting : string option -> string` that given a string option `SOME name` returns the string "Hello there, ...!" where the dots would be replaced by name. Note that the name is given as an option, so if it is `NONE` then replace the dots with "you". *)
 
