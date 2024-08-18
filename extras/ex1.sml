@@ -42,7 +42,17 @@ fun greeting (name: string option) =
 	
 (* 5. Write a function `repeat : int list * int list -> int list` that given a list of integers and another list of nonnegative integers, repeats the integers in the first list according to the numbers indicated by the second list. For example: `repeat ([1,2,3], [4,0,3]) = [1,1,1,1,3,3,3]`. *)
 
-	     
+fun repeat (is: int list  * int list) =
+    let
+	fun rep (n: int, is: int list * int list) =
+	    if null (#2 is) then []
+	    else if n > 0 then hd(#1 is) :: rep(n - 1, ((#1 is), (#2 is)))
+	    else if null (tl(#2 is)) then []
+	    else rep(hd(tl(#2 is)), (tl(#1 is), tl(#2 is)))
+    in
+	rep(hd(#2 is), ((#1 is), (#2 is)))
+    end
+    
 (* 6. Write a function `addOpt : int option * int option -> int option` that given two "optional" integers, adds them if they are both present (returning `SOME` of their sum), or returns `NONE` if at least one of the two arguments is `NONE`. *)
 
 fun addOpt (ops: int option * int option) =
@@ -51,6 +61,8 @@ fun addOpt (ops: int option * int option) =
 	
 (* 7. Write a function `addAllOpt : int option list -> int option` that given a list of "optional" integers, adds those integers that are there (i.e., adds all the `SOME i`). For example: `addAllOpt ([SOME 1, NONE, SOME 3]) = SOME 4`. If the list does not contain any `SOME i`, i.e., they are all `NONE` or the list is empty, the function should return `NONE`. *)
 
+
+	      
 (* 8. Write a function `any : bool list -> bool` that given a list of booleans returns `true` if there is at least one of them that is `true`, otherwise returns `false`. (If the list is empty it should return `false` because there is no `true`.) *)
 
 (* 9. Write a function `all : bool list -> bool` that given a list of booleans returns `true` if all of them are `true`, otherwise returns `false`. (If the list is empty it should return `true` because there is no `false`.) *)
