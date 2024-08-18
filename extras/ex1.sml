@@ -105,6 +105,16 @@ fun lookup (ps: (string * int) list, s2: string) =
 				      
 (* 12. Write a function `splitup : int list -> int list * int list` that given a list of integers creates two lists of integers, one containing the non-negative entries, the other containing the negative entries. Relative order must be preserved: All non-negative entries must appear in the same order in which they were on the original list, and similarly for the negative entries. *)
 
+fun splitup (is: int list) =
+    if null is then ([], [])
+    else
+	let
+	    val (positives, negatives) = splitup(tl is)
+	in
+	    if hd is >= 0 then (hd is :: positives, negatives)
+	    else (positives, hd is :: negatives)
+	end
+	       
 (* 13. Write a version `splitAt : int list * int -> int list * int list` of the previous function that takes an extra "threshold" parameter, and uses that instead of 0 as the separating point for the two resulting lists. *)
 
 (* 14. Write a function `isSorted : int list -> bool` that given a list of integers determines whether the list is sorted in increasing order. *)
