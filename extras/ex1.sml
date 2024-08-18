@@ -117,6 +117,16 @@ fun splitup (is: int list) =
 	       
 (* 13. Write a version `splitAt : int list * int -> int list * int list` of the previous function that takes an extra "threshold" parameter, and uses that instead of 0 as the separating point for the two resulting lists. *)
 
+fun splitAt (is: int list, t: int) =
+    if null is then ([], [])
+    else
+	let
+	    val (greater, lesser) = splitAt(tl is, t)
+	in
+	    if hd is >= t then (hd is :: greater, lesser)
+	    else (greater, hd is :: lesser)
+	end
+	    
 (* 14. Write a function `isSorted : int list -> bool` that given a list of integers determines whether the list is sorted in increasing order. *)
 
 (* 15. Write a function `isAnySorted : int list -> bool` that given a list of integers determines whether the list is sorted in either increasing or decreasing order. *)
