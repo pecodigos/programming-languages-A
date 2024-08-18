@@ -61,8 +61,21 @@ fun addOpt (ops: int option * int option) =
 	
 (* 7. Write a function `addAllOpt : int option list -> int option` that given a list of "optional" integers, adds those integers that are there (i.e., adds all the `SOME i`). For example: `addAllOpt ([SOME 1, NONE, SOME 3]) = SOME 4`. If the list does not contain any `SOME i`, i.e., they are all `NONE` or the list is empty, the function should return `NONE`. *)
 
-
-	      
+fun addAllOpt (ops: int option list) =
+    let
+	fun is_there_some (ops: int option list) =
+	    if null ops then false
+	    else if isSome (hd ops) then true
+	    else is_there_some(tl ops)
+	fun sum (ops: int option list) =
+	    if null ops then 0
+	    else if isSome (hd ops) = false then sum(tl ops)
+	    else valOf(hd ops) + sum(tl ops) 
+    in
+	if is_there_some(ops) = true then SOME (sum(ops))
+	else NONE
+    end
+			    
 (* 8. Write a function `any : bool list -> bool` that given a list of booleans returns `true` if there is at least one of them that is `true`, otherwise returns `false`. (If the list is empty it should return `false` because there is no `true`.) *)
 
 (* 9. Write a function `all : bool list -> bool` that given a list of booleans returns `true` if all of them are `true`, otherwise returns `false`. (If the list is empty it should return `true` because there is no `false`.) *)
