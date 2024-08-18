@@ -96,28 +96,31 @@ fun zip (is: int list * int list) =
     if null (#1 is) orelse null (#2 is) then []
     else (hd(#1 is), hd(#2 is)) :: zip((tl (#1 is)), (tl (#2 is))) 
 
-(* 12. Lesser challenge: Write a version `zipOpt` of `zip` with return type `(int * int) list option`. This version should return `SOME` of a list when the original lists have the same length, and `NONE` if they do not. *)
+(* 11. Write a function `lookup : (string * int) list * string -> int option` that takes a list of pairs `(s, i)` and also a string `s2` to look up. It then goes through the list of pairs looking for the string `s2` in the first component. If it finds a match with the corresponding number `i`, then it returns `SOME i`. If it does not, it returns `NONE`. *)
 
-(* 13. Write a function `lookup : (string * int) list * string -> int option` that takes a list of pairs `(s, i)` and also a string `s2` to look up. It then goes through the list of pairs looking for the string `s2` in the first component. If it finds a match with the corresponding number `i`, then it returns `SOME i`. If it does not, it returns `NONE`. *)
+fun lookup (ps: (string * int) list, s2: string) =
+    if null ps then NONE
+    else if #1(hd ps) = s2 then SOME (#2(hd ps))
+    else lookup(tl ps, s2)
+				      
+(* 12. Write a function `splitup : int list -> int list * int list` that given a list of integers creates two lists of integers, one containing the non-negative entries, the other containing the negative entries. Relative order must be preserved: All non-negative entries must appear in the same order in which they were on the original list, and similarly for the negative entries. *)
 
-(* 14. Write a function `splitup : int list -> int list * int list` that given a list of integers creates two lists of integers, one containing the non-negative entries, the other containing the negative entries. Relative order must be preserved: All non-negative entries must appear in the same order in which they were on the original list, and similarly for the negative entries. *)
+(* 13. Write a version `splitAt : int list * int -> int list * int list` of the previous function that takes an extra "threshold" parameter, and uses that instead of 0 as the separating point for the two resulting lists. *)
 
-(* 15. Write a version `splitAt : int list * int -> int list * int list` of the previous function that takes an extra "threshold" parameter, and uses that instead of 0 as the separating point for the two resulting lists. *)
+(* 14. Write a function `isSorted : int list -> bool` that given a list of integers determines whether the list is sorted in increasing order. *)
 
-(* 16. Write a function `isSorted : int list -> bool` that given a list of integers determines whether the list is sorted in increasing order. *)
+(* 15. Write a function `isAnySorted : int list -> bool` that given a list of integers determines whether the list is sorted in either increasing or decreasing order. *)
 
-(* 17. Write a function `isAnySorted : int list -> bool` that given a list of integers determines whether the list is sorted in either increasing or decreasing order. *)
+(* 16. Write a function `sortedMerge : int list * int list -> int list` that takes two lists of integers that are each sorted from smallest to largest, and merges them into one sorted list. For example: `sortedMerge ([1,4,7], [5,8,9]) = [1,4,5,7,8,9]`. *)
 
-(* 18. Write a function `sortedMerge : int list * int list -> int list` that takes two lists of integers that are each sorted from smallest to largest, and merges them into one sorted list. For example: `sortedMerge ([1,4,7], [5,8,9]) = [1,4,5,7,8,9]`. *)
+(* 17. Write a sorting function `qsort : int list -> int list` that works as follows: Takes the first element out, and uses it as the "threshold" for `splitAt`. It then recursively sorts the two lists produced by `splitAt`. Finally, it brings the two lists together. (Don't forget that element you took out, it needs to get back in at some point). You could use `sortedMerge` for the "bring together" part, but you do not need to as all the numbers in one list are less than all the numbers in the other.) *)
 
-(* 19. Write a sorting function `qsort : int list -> int list` that works as follows: Takes the first element out, and uses it as the "threshold" for `splitAt`. It then recursively sorts the two lists produced by `splitAt`. Finally, it brings the two lists together. (Don't forget that element you took out, it needs to get back in at some point). You could use `sortedMerge` for the "bring together" part, but you do not need to as all the numbers in one list are less than all the numbers in the other.) *)
+(* 18. Write a function `divide : int list -> int list * int list` that takes a list of integers and produces two lists by alternating elements between the two lists. For example: `divide ([1,2,3,4,5,6,7]) = ([1,3,5,7], [2,4,6])`. *)
 
-(* 20. Write a function `divide : int list -> int list * int list` that takes a list of integers and produces two lists by alternating elements between the two lists. For example: `divide ([1,2,3,4,5,6,7]) = ([1,3,5,7], [2,4,6])`. *)
+(* 19. Write another sorting function `not_so_quick_sort : int list -> int list` that works as follows: Given the initial list of integers, splits it in two lists using `divide`, then recursively sorts those two lists, then merges them together with `sortedMerge`. *)
 
-(* 21. Write another sorting function `not_so_quick_sort : int list -> int list` that works as follows: Given the initial list of integers, splits it in two lists using `divide`, then recursively sorts those two lists, then merges them together with `sortedMerge`. *)
+(* 20. Write a function `fullDivide : int * int -> int * int` that given two numbers `k` and `n` attempts to evenly divide `k` into `n` as many times as possible, and returns a pair `(d, n2)` where `d` is the number of times while `n2` is the resulting `n` after all those divisions. Examples: `fullDivide (2, 40) = (3, 5)` because `2*2*2*5 = 40` and `fullDivide((3,10)) = (0, 10)` because `3` does not divide `10`. *)
 
-(* 22. Write a function `fullDivide : int * int -> int * int` that given two numbers `k` and `n` attempts to evenly divide `k` into `n` as many times as possible, and returns a pair `(d, n2)` where `d` is the number of times while `n2` is the resulting `n` after all those divisions. Examples: `fullDivide (2, 40) = (3, 5)` because `2*2*2*5 = 40` and `fullDivide((3,10)) = (0, 10)` because `3` does not divide `10`. *)
+(* 21. Using `fullDivide`, write a function `factorize : int -> (int * int) list` that given a number `n` returns a list of pairs `(d, k)` where `d` is a prime number dividing `n` and `k` is the number of times it fits. The pairs should be in increasing order of prime factor, and the process should stop when the divisor considered surpasses the square root of `n`. If you make sure to use the reduced number `n2` given by `fullDivide` for each next step, you should not need to test if the divisors are prime: If a number divides into `n`, it must be prime (if it had prime factors, they would have been earlier prime factors of `n` and thus reduced earlier). Examples: `factorize(20) = [(2,2), (5,1)]`; `factorize(36) = [(2,2), (3,2)]`; `factorize(1) = []`. *)
 
-(* 23. Using `fullDivide`, write a function `factorize : int -> (int * int) list` that given a number `n` returns a list of pairs `(d, k)` where `d` is a prime number dividing `n` and `k` is the number of times it fits. The pairs should be in increasing order of prime factor, and the process should stop when the divisor considered surpasses the square root of `n`. If you make sure to use the reduced number `n2` given by `fullDivide` for each next step, you should not need to test if the divisors are prime: If a number divides into `n`, it must be prime (if it had prime factors, they would have been earlier prime factors of `n` and thus reduced earlier). Examples: `factorize(20) = [(2,2), (5,1)]`; `factorize(36) = [(2,2), (3,2)]`; `factorize(1) = []`. *)
-
-(* 24. Write a function `multiply : (int * int) list -> int` that given a factorization of a number `n` as described in the previous problem computes back the number `n`. So this should do the opposite of `factorize`. *)
+(* 22. Write a function `multiply : (int * int) list -> int` that given a factorization of a number `n` as described in the previous problem computes back the number `n`. So this should do the opposite of `factorize`. *)
