@@ -129,6 +129,11 @@ fun splitAt (is: int list, t: int) =
 	    
 (* 14. Write a function `isSorted : int list -> bool` that given a list of integers determines whether the list is sorted in increasing order. *)
 
+fun isSorted (is: int list) =
+    if null (tl is) then true
+    else if hd is > hd(tl is) then false
+    else isSorted(tl is)
+	    
 (* 15. Write a function `isAnySorted : int list -> bool` that given a list of integers determines whether the list is sorted in either increasing or decreasing order. *)
 
 (* 16. Write a function `sortedMerge : int list * int list -> int list` that takes two lists of integers that are each sorted from smallest to largest, and merges them into one sorted list. For example: `sortedMerge ([1,4,7], [5,8,9]) = [1,4,5,7,8,9]`. *)
