@@ -136,6 +136,22 @@ fun isSorted (is: int list) =
 	    
 (* 15. Write a function `isAnySorted : int list -> bool` that given a list of integers determines whether the list is sorted in either increasing or decreasing order. *)
 
+fun isAnySorted (is: int list) =
+    let
+	fun track_inc (is: int list) =
+	    if null (tl is) then true
+	    else if hd is < hd(tl is) then track_inc(tl is)
+	    else false
+	fun track_dec (is: int list) =
+	    if null (tl is) then true
+	    else if hd is > hd(tl is) then track_dec(tl is)
+	    else false
+    in
+	if track_inc(is) then true
+	else if track_dec(is) then true
+	else false
+    end
+	 
 (* 16. Write a function `sortedMerge : int list * int list -> int list` that takes two lists of integers that are each sorted from smallest to largest, and merges them into one sorted list. For example: `sortedMerge ([1,4,7], [5,8,9]) = [1,4,5,7,8,9]`. *)
 
 (* 17. Write a sorting function `qsort : int list -> int list` that works as follows: Takes the first element out, and uses it as the "threshold" for `splitAt`. It then recursively sorts the two lists produced by `splitAt`. Finally, it brings the two lists together. (Don't forget that element you took out, it needs to get back in at some point). You could use `sortedMerge` for the "bring together" part, but you do not need to as all the numbers in one list are less than all the numbers in the other.) *)
