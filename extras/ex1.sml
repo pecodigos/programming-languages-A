@@ -22,7 +22,6 @@ fun min_max (ns: int list) =
 	tuple(hd ns, hd ns, ns)
     end
 	
-
 (* 3. Write a function `cumsum : int list -> int list` that takes a list of numbers and returns a list of the partial sums of those numbers. For example: `cumsum [1,4,20] = [1,5,25]`. *)
 
 fun cumsum (ns: int list) =
@@ -154,6 +153,12 @@ fun isAnySorted (is: int list) =
 	 
 (* 16. Write a function `sortedMerge : int list * int list -> int list` that takes two lists of integers that are each sorted from smallest to largest, and merges them into one sorted list. For example: `sortedMerge ([1,4,7], [5,8,9]) = [1,4,5,7,8,9]`. *)
 
+fun sortedMerge (is: int list * int list) =
+    if null (#1 is) then #2 is
+    else if null (#2 is) then #1 is
+    else if hd (#1 is) < hd (#2 is) then hd (#1 is) :: sortedMerge(tl(#1 is), #2 is)
+    else hd (#2 is) :: sortedMerge(#1 is, tl(#2 is))
+	
 (* 17. Write a sorting function `qsort : int list -> int list` that works as follows: Takes the first element out, and uses it as the "threshold" for `splitAt`. It then recursively sorts the two lists produced by `splitAt`. Finally, it brings the two lists together. (Don't forget that element you took out, it needs to get back in at some point). You could use `sortedMerge` for the "bring together" part, but you do not need to as all the numbers in one list are less than all the numbers in the other.) *)
 
 (* 18. Write a function `divide : int list -> int list * int list` that takes a list of integers and produces two lists by alternating elements between the two lists. For example: `divide ([1,2,3,4,5,6,7]) = ([1,3,5,7], [2,4,6])`. *)
