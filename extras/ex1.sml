@@ -92,6 +92,10 @@ fun all (bs: bool list) =
 	    
 (* 10. Write a function `zip : int list * int list -> (int * int) list` that given two lists of integers creates consecutive pairs, and stops when one of the lists is empty. For example: `zip ([1,2,3], [4,6]) = [(1,4), (2,6)]`. *)
 
+fun zip (is: int list * int list) =
+    if null (#1 is) orelse null (#2 is) then []
+    else (hd(#1 is), hd(#2 is)) :: zip((tl (#1 is)), (tl (#2 is))) 
+
 (* 12. Lesser challenge: Write a version `zipOpt` of `zip` with return type `(int * int) list option`. This version should return `SOME` of a list when the original lists have the same length, and `NONE` if they do not. *)
 
 (* 13. Write a function `lookup : (string * int) list * string -> int option` that takes a list of pairs `(s, i)` and also a string `s2` to look up. It then goes through the list of pairs looking for the string `s2` in the first component. If it finds a match with the corresponding number `i`, then it returns `SOME i`. If it does not, it returns `NONE`. *)
