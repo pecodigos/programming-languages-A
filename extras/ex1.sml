@@ -85,6 +85,11 @@ fun any (bs: bool list) =
 	
 (* 9. Write a function `all : bool list -> bool` that given a list of booleans returns `true` if all of them are `true`, otherwise returns `false`. (If the list is empty it should return `true` because there is no `false`.) *)
 
+fun all (bs: bool list) =
+    if null bs then true
+    else if hd bs = false then false
+    else all(tl bs)
+	    
 (* 10. Write a function `zip : int list * int list -> (int * int) list` that given two lists of integers creates consecutive pairs, and stops when one of the lists is empty. For example: `zip ([1,2,3], [4,6]) = [(1,4), (2,6)]`. *)
 
 (* 12. Lesser challenge: Write a version `zipOpt` of `zip` with return type `(int * int) list option`. This version should return `SOME` of a list when the original lists have the same length, and `NONE` if they do not. *)
