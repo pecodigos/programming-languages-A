@@ -120,10 +120,10 @@ fun splitAt (is: int list, t: int) =
     if null is then ([], [])
     else
 	let
-	    val (greater, lesser) = splitAt(tl is, t)
+	    val (lesser, greater) = splitAt(tl is, t)
 	in
-	    if hd is >= t then (hd is :: greater, lesser)
-	    else (greater, hd is :: lesser)
+	    if hd is < t then (hd is :: lesser, greater)
+	    else (lesser, hd is :: greater)
 	end
 	    
 (* 14. Write a function `isSorted : int list -> bool` that given a list of integers determines whether the list is sorted in increasing order. *)
@@ -160,7 +160,11 @@ fun sortedMerge (is: int list * int list) =
     else hd (#2 is) :: sortedMerge(#1 is, tl(#2 is))
 	
 (* 17. Write a sorting function `qsort : int list -> int list` that works as follows: Takes the first element out, and uses it as the "threshold" for `splitAt`. It then recursively sorts the two lists produced by `splitAt`. Finally, it brings the two lists together. (Don't forget that element you took out, it needs to get back in at some point). You could use `sortedMerge` for the "bring together" part, but you do not need to as all the numbers in one list are less than all the numbers in the other.) *)
-
+(* I'm not sure about this answer here, but that's what I have for now *)
+fun qsort (is: int list) =
+    if null is then []
+    else sortedMerge(splitAt(is, hd is))
+				  
 (* 18. Write a function `divide : int list -> int list * int list` that takes a list of integers and produces two lists by alternating elements between the two lists. For example: `divide ([1,2,3,4,5,6,7]) = ([1,3,5,7], [2,4,6])`. *)
 
 (* 19. Write another sorting function `not_so_quick_sort : int list -> int list` that works as follows: Given the initial list of integers, splits it in two lists using `divide`, then recursively sorts those two lists, then merges them together with `sortedMerge`. *)
