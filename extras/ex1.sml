@@ -185,8 +185,6 @@ fun divide (is: int list) =
 	
 (* 19. Write another sorting function `not_so_quick_sort : int list -> int list` that works as follows: Given the initial list of integers, splits it in two lists using `divide`, then recursively sorts those two lists, then merges them together with `sortedMerge`. *)
 
-(* 20. Write a function `fullDivide : int * int -> int * int` that given two numbers `k` and `n` attempts to evenly divide `k` into `n` as many times as possible, and returns a pair `(d, n2)` where `d` is the number of times while `n2` is the resulting `n` after all those divisions. Examples: `fullDivide (2, 40) = (3, 5)` because `2*2*2*5 = 40` and `fullDivide((3,10)) = (0, 10)` because `3` does not divide `10`. *)
-
-(* 21. Using `fullDivide`, write a function `factorize : int -> (int * int) list` that given a number `n` returns a list of pairs `(d, k)` where `d` is a prime number dividing `n` and `k` is the number of times it fits. The pairs should be in increasing order of prime factor, and the process should stop when the divisor considered surpasses the square root of `n`. If you make sure to use the reduced number `n2` given by `fullDivide` for each next step, you should not need to test if the divisors are prime: If a number divides into `n`, it must be prime (if it had prime factors, they would have been earlier prime factors of `n` and thus reduced earlier). Examples: `factorize(20) = [(2,2), (5,1)]`; `factorize(36) = [(2,2), (3,2)]`; `factorize(1) = []`. *)
-
-(* 22. Write a function `multiply : (int * int) list -> int` that given a factorization of a number `n` as described in the previous problem computes back the number `n`. So this should do the opposite of `factorize`. *)
+fun not_so_quick_sort (is: int list) =
+    if null is then []
+    else sortedMerge(divide(is))
