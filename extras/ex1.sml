@@ -161,12 +161,28 @@ fun sortedMerge (is: int list * int list) =
 	
 (* 17. Write a sorting function `qsort : int list -> int list` that works as follows: Takes the first element out, and uses it as the "threshold" for `splitAt`. It then recursively sorts the two lists produced by `splitAt`. Finally, it brings the two lists together. (Don't forget that element you took out, it needs to get back in at some point). You could use `sortedMerge` for the "bring together" part, but you do not need to as all the numbers in one list are less than all the numbers in the other.) *)
 (* I'm not sure about this answer here, but that's what I have for now *)
+
 fun qsort (is: int list) =
     if null is then []
     else sortedMerge(splitAt(is, hd is))
 				  
 (* 18. Write a function `divide : int list -> int list * int list` that takes a list of integers and produces two lists by alternating elements between the two lists. For example: `divide ([1,2,3,4,5,6,7]) = ([1,3,5,7], [2,4,6])`. *)
 
+fun divide (is: int list) =
+    let
+	fun l_div (is: int list, i: int) =
+	    if null is then ([],[])
+	    else
+		let
+		    val (first, second) = l_div(tl is, i + 1)
+		in
+		    if i mod 2 = 0 then (hd is :: first, second)
+		    else (first, hd is :: second)
+		end
+    in
+	l_div(is, 0)
+    end
+	
 (* 19. Write another sorting function `not_so_quick_sort : int list -> int list` that works as follows: Given the initial list of integers, splits it in two lists using `divide`, then recursively sorts those two lists, then merges them together with `sortedMerge`. *)
 
 (* 20. Write a function `fullDivide : int * int -> int * int` that given two numbers `k` and `n` attempts to evenly divide `k` into `n` as many times as possible, and returns a pair `(d, n2)` where `d` is the number of times while `n2` is the resulting `n` after all those divisions. Examples: `fullDivide (2, 40) = (3, 5)` because `2*2*2*5 = 40` and `fullDivide((3,10)) = (0, 10)` because `3` does not divide `10`. *)
